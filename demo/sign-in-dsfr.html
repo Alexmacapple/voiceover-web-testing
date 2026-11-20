@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-scheme="system">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Connexion - Service d’exemple</title>
+
+
+    <!-- DSFR CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.15.4/dist/dsfr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.15.4/dist/utility/icons/icons.min.css">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.15.4/dist/favicon/apple-touch-icon.png">
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.15.4/dist/favicon/favicon.svg" type="image/svg+xml">
+</head>
+<body id="top">
+
+    <div class="fr-skiplinks">
+        <nav class="fr-container" role="navigation" aria-label="Accès rapide">
+            <ul class="fr-skiplinks__list">
+                <li><a class="fr-link" href="#contenu">Contenu</a></li>
+                <li><a class="fr-link" href="#footer">Pied de page</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <header role="banner" class="fr-header">
+        <div class="fr-header__body">
+            <div class="fr-container">
+                <div class="fr-header__body-row">
+                    <div class="fr-header__brand fr-enlarge-link">
+                        <div class="fr-header__service">
+                            <a href="/sign-in-dsfr" title="Accueil - Service d’exemple">
+                                <p class="fr-header__service-title">Service d’exemple</p>
+                            </a>
+                            <p class="fr-header__service-tagline">Page de test VoiceOver</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="contenu">
+        <div class="fr-container">
+            <div class="fr-grid-row fr-grid-row--center fr-py-8w">
+                <div class="fr-col-12 fr-col-md-8 fr-col-lg-6">
+
+                    <div id="error-summary" tabindex="-1" hidden>
+                        <div class="fr-alert fr-alert--error fr-mb-4w" role="alert">
+                            <h2 class="fr-alert__title">Il y a un problème</h2>
+                            <ul id="error-list"></ul>
+                        </div>
+                    </div>
+
+                    <div id="sign-in">
+                        <h1>Connexion</h1>
+                        <form id="sign-in-form" action="/sign-in-dsfr" method="post" novalidate>
+                            <div class="fr-input-group" id="email-group">
+                                <label class="fr-label" for="email">Adresse électronique
+                                    <span class="fr-hint-text">Format attendu : nom@example.com</span>
+                                </label>
+                                <input class="fr-input" type="email" id="email" name="email" autocomplete="email"
+                                       spellcheck="false" aria-describedby="email-messages">
+                                <div class="fr-messages-group" id="email-messages" aria-live="polite"></div>
+                            </div>
+                            <div class="fr-input-group" id="password-group">
+                                <label class="fr-label" for="password">Mot de passe</label>
+                                <input class="fr-input" type="password" id="password" name="password"
+                                       autocomplete="current-password" aria-describedby="password-messages">
+                                <div class="fr-messages-group" id="password-messages" aria-live="polite"></div>
+                            </div>
+                            <ul class="fr-btns-group fr-mt-4w">
+                                <li>
+                                    <button class="fr-btn" type="submit">Se connecter</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+
+                    <div id="success" tabindex="-1" hidden>
+                        <div class="fr-alert fr-alert--success">
+                            <h1 class="fr-alert__title">Connexion réussie</h1>
+                            <p>L’exemple s’arrête ici.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fr-footer" role="contentinfo" id="footer">
+        <div class="fr-container">
+            <div class="fr-footer__body">
+
+                <div class="fr-footer__brand">
+                    <p>Service d’exemple</p>
+                </div>
+                <div class="fr-footer__content">
+                    <p class="fr-footer__content-desc">Page de test pour les essais VoiceOver. Elle ne collecte aucune donnée.</p>
+                    <ul class="fr-footer__content-list">
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" rel="noopener external" title="legifrance.gouv.fr - nouvelle fenêtre" href="https://legifrance.gouv.fr">legifrance.gouv.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" rel="noopener external" title="gouvernement.fr - nouvelle fenêtre" href="https://gouvernement.fr">gouvernement.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" rel="noopener external" title="service-public.gouv.fr - nouvelle fenêtre" href="https://service-public.gouv.fr">service-public.gouv.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" rel="noopener external" title="data.gouv.fr - nouvelle fenêtre" href="https://data.gouv.fr">data.gouv.fr</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fr-footer__bottom">
+                <ul class="fr-footer__bottom-list">
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="/plan-du-site">Plan du site</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="/accessibilite">Accessibilité : non conforme</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="/mentions-legales">Mentions légales</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="/donnees-personnelles">Données personnelles</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="/gestion-des-cookies">Gestion des cookies</a>
+                    </li>
+                </ul>
+                <div class="fr-footer__bottom-copy">
+                    <p>Sauf mention contraire, tous les contenus de ce site sont sous <a href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" target="_blank" rel="noopener external" title="licence etalab-2.0 - nouvelle fenêtre">licence etalab-2.0</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.15.4/dist/dsfr.module.min.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.15.4/dist/dsfr.nomodule.min.js"></script>
+    <script>
+    (function () {
+      var form = document.getElementById("sign-in-form");
+      var signIn = document.getElementById("sign-in");
+      var summary = document.getElementById("error-summary");
+      var list = document.getElementById("error-list");
+      var success = document.getElementById("success");
+      var fields = [
+        { id: "email", message: "Saisissez votre adresse électronique" },
+        { id: "password", message: "Saisissez votre mot de passe" }
+      ];
+
+      function clearError(field) {
+        document.getElementById(field.id + "-group").classList.remove("fr-input-group--error");
+        document.getElementById(field.id + "-messages").textContent = "";
+      }
+
+      function showError(field) {
+        document.getElementById(field.id + "-group").classList.add("fr-input-group--error");
+        var message = document.createElement("p");
+        message.className = "fr-message fr-message--error";
+        message.id = field.id + "-message-error";
+        var prefix = document.createElement("span");
+        prefix.className = "fr-sr-only";
+        prefix.textContent = "Erreur : ";
+        message.appendChild(prefix);
+        message.appendChild(document.createTextNode(field.message));
+        document.getElementById(field.id + "-messages").appendChild(message);
+
+        var link = document.createElement("a");
+        link.className = "fr-link";
+        link.href = "#" + field.id;
+        link.textContent = field.message;
+        var item = document.createElement("li");
+        item.appendChild(link);
+        list.appendChild(item);
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        fields.forEach(clearError);
+        list.textContent = "";
+        var errors = fields.filter(function (field) {
+          return document.getElementById(field.id).value.trim() === "";
+        });
+        if (errors.length === 0) {
+          summary.hidden = true;
+          signIn.hidden = true;
+          success.hidden = false;
+          success.focus();
+          return;
+        }
+        errors.forEach(showError);
+        summary.hidden = false;
+        // Témoin négatif : /sign-in-dsfr?defaut=focus laisse le focus sur le bouton.
+        if (new URLSearchParams(location.search).get("defaut") !== "focus") {
+          summary.focus();
+        }
+      });
+
+      // Les liens du récapitulatif placent le focus sur le champ concerné.
+      list.addEventListener("click", function (event) {
+        var link = event.target.closest("a");
+        if (!link) return;
+        event.preventDefault();
+        document.getElementById(link.getAttribute("href").slice(1)).focus();
+      });
+    })();
+    </script>
+
+</body>
+</html>

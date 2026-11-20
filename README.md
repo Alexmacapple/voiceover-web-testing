@@ -24,7 +24,7 @@ Le skill et sa documentation sont rédigés en français. Le besoin auquel il r�
 - L’autorisation Automatisation de l’application qui lance les commandes, vers VoiceOver et vers le navigateur (Safari ou Google Chrome) ; macOS la demande au premier appel.
 - Un outil de pilotage du navigateur ou du bureau, par exemple Playwright, pour charger la page et saisir les champs.
 
-Les versions de macOS et de VoiceOver ne sont pas qualifiées : le skill demande de les relever dans chaque reçu de session. Un seul essai réel a eu lieu, le 20 novembre 2026, sur la page de démonstration (macOS 27, Safari 27, VoiceOver en français) : le pilote y a distingué la page correcte du témoin négatif par la position du curseur VoiceOver.
+Les versions de macOS et de VoiceOver ne sont pas qualifiées : le skill demande de les relever dans chaque reçu de session. Deux essais réels ont eu lieu le 20 novembre 2026, sur la page de démonstration (macOS 27, Safari 27, VoiceOver en français). Le premier a distingué la page correcte du témoin négatif par la position du curseur VoiceOver. Le second, sur la variante DSFR, n’a abouti que pour le cas correct : VoiceOver s’est arrêté pendant le cas défaillant.
 
 ## Installation
 
@@ -51,10 +51,13 @@ Le dossier `demo/` contient une page de connexion d’exemple, en français, et 
 node demo/server.js
 ```
 
-Ouvrir ensuite http://127.0.0.1:8080/sign-in ; la variable `PORT` change le port. Le serveur n’écoute que sur `127.0.0.1`.
+Ouvrir ensuite http://127.0.0.1:8765/sign-in ; la variable `PORT` change le port. Le serveur n’écoute que sur `127.0.0.1`.
 
 - Témoin positif : envoyer le formulaire vide. Le focus arrive sur le récapitulatif « Il y a un problème ».
 - Témoin négatif : ouvrir `/sign-in?defaut=focus`, puis envoyer le formulaire vide. Le récapitulatif s’affiche, mais le focus reste sur le bouton « Se connecter ».
+- Variante DSFR : `/sign-in-dsfr`, même page et mêmes témoins avec le Design System de l’État (DSFR 1.15.4, mode neutre, chargé depuis le CDN, donc avec accès réseau).
+
+La description de la page, son expression de besoin et la vérification bornée de la variante DSFR sont dans [`demo/description-et-besoin.md`](demo/description-et-besoin.md).
 
 Origine : page et serveur du dépôt [voiceover-testing-with-claude](https://github.com/abbott567/voiceover-testing-with-claude) de Craig Abbott, sous licence MIT reproduite dans `demo/LICENSE`. Modifications : textes, commentaires et langue de la page traduits en français ; logo et polices IBM Plex Sans retirés (la page utilise Arial) ; écoute limitée à `127.0.0.1` ; témoin négatif activé par l’adresse au lieu de commenter une ligne.
 

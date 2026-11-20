@@ -1,14 +1,15 @@
 // Serveur sans dépendance pour la page de connexion d’exemple.
-// Lancer : node demo/server.js, puis ouvrir http://127.0.0.1:8080/sign-in
+// Lancer : node demo/server.js, puis ouvrir http://127.0.0.1:8765/sign-in
 const http = require("node:http");
 const fs = require("node:fs/promises");
 const path = require("node:path");
 
-const port = Number(process.env.PORT) || 8080;
+const port = Number(process.env.PORT) || 8765;
 
 // Chemins que les scénarios peuvent visiter, avec le fichier servi pour chacun.
 const pages = {
   "/sign-in": "sign-in.html",
+  "/sign-in-dsfr": "sign-in-dsfr.html",
 };
 
 // Fichiers statiques (polices) servis sur /assets depuis demo/assets, non fourni.

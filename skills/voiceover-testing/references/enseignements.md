@@ -60,3 +60,13 @@ Au premier appel AppleScript vers VoiceOver, une invite Automatisation encore
 ouverte a fait expirer l’appel (`-1712`) ; l’appel suivant a réussi. En français,
 VoiceOver annonce « Entrée … contenu web » à l’entrée de la page et « Pour sortir
 de cette zone web, appuyez sur … » à sa sortie.
+
+Sur la variante DSFR de la même page (même jour, Safari), chaque champ porte un
+groupe de messages `aria-live="polite"`. Après l’envoi, la dernière phrase
+captée était le message du champ (« Erreur : Saisissez votre mot de passe . »),
+pas le titre de l’alerte : une région live voisine peut recouvrir l’annonce
+attendue dans la capture. L’élément suivant, « liste 2 éléments », restait
+discriminant. Pendant le même essai, une fenêtre de navigateur d’une autre
+session est passée au premier plan : la garde de cible a refusé neuf appels
+(code 5) au lieu de piloter cette fenêtre. VoiceOver s’est ensuite arrêté
+(`-609`, puis code 3) sans trace de plantage ; le cas défaillant n’a pas abouti.
