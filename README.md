@@ -2,7 +2,7 @@
 
 Skill d’agent, au format [Agent Skills](https://agentskills.io/), pour tester un site ou un parcours web avec VoiceOver réellement exécuté sur macOS et relier chaque annonce native à un état et à une action.
 
-Le skill et sa documentation sont rédigés en français.
+Le skill et sa documentation sont rédigés en français. Le besoin auquel il répond, ses exigences et ses critères d’acceptation sont décrits dans l’[expression de besoin](expression-de-besoin.md).
 
 ## Ce que fait le skill
 
