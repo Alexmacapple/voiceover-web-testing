@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test VoiceOver natif"
+  short_description: "Parcours web et annonces VoiceOver avec preuves"
+  default_prompt: "Utilise $voiceover-testing pour tester ce site avec VoiceOver et conserver les annonces et les limites de couverture."

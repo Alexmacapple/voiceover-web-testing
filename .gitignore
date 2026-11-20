@@ -1,0 +1,11 @@
+__pycache__/
+*.py[co]
+.DS_Store
+# Traces VoiceOver : texte potentiellement privé, jamais versionné
+*.jsonl
+# Traduction intégrale et version STE d'un article tiers : usage local, jamais publiées
+traduction-article-craig-abbott*.md
+# Sessions d'essai réel : reçus et traces privés
+essais/
+# Notes internes sur le dépôt d'Abbott
+fiche-depot-craig-abbott.md
