@@ -29,9 +29,12 @@ le pilote reprend souvent le premier plan entre deux appels : la garde refuse
 alors (code 5, aucun geste). Réactiver la fenêtre du document juste avant
 chaque appel ; un `find` long peut être interrompu de la même façon.
 
-Aucun repère de fin de document n’a été observé : `find` ne prouve donc pas
-l’unicité et `activate` reste refusé (code 8), sauf `exit_markers` déclarés
-après observation. Un document se lit ; activer un lien reste un geste humain.
+Dans Aperçu, la fin du document est un silence : après la dernière page,
+`next` ne produit aucune annonce nouvelle (code 7). Le parcours de `find` part
+en outre de la page affichée : le 25 novembre 2026, lancé en page 8, il a
+répondu « introuvable » pour le titre de la page 2. Sans `exit_markers`
+déclarés, `find` est donc refusé d’emblée sur un document (code 8, aucun geste),
+et `activate` aussi. Un document se lit ; activer un lien reste un geste humain.
 
 ## Aperçu : ce qui a été observé
 

@@ -129,14 +129,16 @@ class PilotDocumentsTest(unittest.TestCase):
             mac.actions, ["move to first item", "move right", "move into item"]
         )
 
-    def test_find_sans_repere_de_fin_ne_prouve_pas_l_unicite(self):
+    def test_find_sans_repere_de_fin_refuse_sans_geste(self):
+        # Essai réel du 25 novembre 2026 : le parcours part de la page affichée et la
+        # fin du document est un silence ; un « introuvable » y serait trompeur.
         mac = FakeDocumentMac(
-            moves=[["document groupe"], ["Entrée Page 1 SOMMAIRE"], ["Page 2"], [], []],
+            moves=[["document groupe"], ["Entrée Page 8"], ["Page 9"], [], []],
             under_cursor="SOMMAIRE",
         )
-        code = self.run_pilot(mac, "find", "SOMMAIRE")
-        self.assertIn(code, (pv.ELEMENT, pv.NOT_FOUND))
-        self.assertNotEqual(self.last_row().get("unique"), True)
+        self.assertEqual(self.run_pilot(mac, "find", "SOMMAIRE"), pv.ELEMENT)
+        self.assertEqual(mac.actions, [])
+        self.assertIn("page affichée", self.last_row()["refused"])
         self.assertEqual(self.run_pilot(mac, "activate", "SOMMAIRE"), pv.ELEMENT)
         self.assertNotIn("perform action", mac.actions)
 

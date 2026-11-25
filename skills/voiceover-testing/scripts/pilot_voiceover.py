@@ -373,6 +373,13 @@ def run(args, mac):
         receipt = load_receipt(args.receipt)
         row.update(check_target(mac, receipt))
         if args.command == "find":
+            if "app" in receipt and not receipt.get("exit_markers"):
+                raise Refused(
+                    ELEMENT,
+                    "find dans un document : le parcours part de la page affichée et"
+                    " la fin du document est un silence, donc ni absence ni unicité"
+                    " ne sont prouvables sans « exit_markers »." + BY_HAND_ELEMENT,
+                )
             row["announcement"], row["matches"], row["unique"] = find(
                 mac, receipt, args.words[0], args.words[1:], args.max
             )
