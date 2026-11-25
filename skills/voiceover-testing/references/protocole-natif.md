@@ -17,6 +17,10 @@ Relever **avant modification** :
   AppleScript ») ;
 - Confidentialité et sécurité → Automatisation → application réellement
   porteuse des Apple Events → VoiceOver ;
+- dans l’Utilitaire VoiceOver, en lecture seule, les réglages qui changent la
+  preuve : suivi entre curseur VoiceOver, focus clavier et pointeur, régions
+  live, mode de navigation web, annonces au chargement et indications après
+  délai (liste et effets dans [les réglages et commandes](reglages-et-commandes.md)) ;
 - onglets, processus et serveur créés pour l’essai ; presse-papiers si une copie
   est prévue. Conserver toute sauvegarde privée hors du rapport et la retirer
   après restauration vérifiée.
@@ -94,15 +98,18 @@ Un arbre AX incomplet dans l’outil ne prouve pas que VoiceOver voit un arbre v
 ## Piloter le curseur VoiceOver
 
 Après l’accord explicite de l’utilisateur, écrire dans le dossier de session un
-`recu.json` qui cite cet accord mot pour mot, nomme le navigateur et un marqueur
-du titre de l’onglet possédé :
+`recu.json` qui cite cet accord mot pour mot, nomme le navigateur, un marqueur
+du titre de l’onglet possédé et un fragment de son adresse (8 caractères au
+moins chacun) :
 
 ```json
-{"accord": "citation exacte de l’accord", "browser": "Safari", "marker": "Service d’exemple"}
+{"accord": "citation exacte de l’accord", "browser": "Safari", "marker": "Service d’exemple", "url_marker": "127.0.0.1:8765/sign-in"}
 ```
 
 Ne jamais écrire ce fichier sans accord réel : il trace l’accord, il ne le prouve
-pas. Les champs facultatifs `web_area_markers` et `exit_markers` remplacent les
+pas. Pour une fenêtre de document (Aperçu, Word, PowerPoint), le reçu porte
+`app` et `marker` à la place de `browser` et `url_marker` :
+[cible document](documents.md). Les champs facultatifs `web_area_markers` et `exit_markers` remplacent les
 annonces attendues de la zone web (par défaut en anglais et en français).
 
 ```sh
@@ -110,21 +117,45 @@ python3 scripts/pilot_voiceover.py --receipt /chemin/session/recu.json --journal
 python3 scripts/pilot_voiceover.py --receipt /chemin/session/recu.json --journal /chemin/session/pilote.jsonl find "Se connecter" bouton
 ```
 
-Commandes : `first` (premier élément de la page), `next`, `prev`, `activate`,
-`find <nom> [mots…]` (80 déplacements au plus, `--max` jusqu’à 200) et `last`
-(relit la dernière ligne du journal et sort avec son code ; sans journal, code 1). Avant chaque action, le script vérifie que VoiceOver tourne,
-que le navigateur du reçu est au premier plan (Safari ou Google Chrome) et que le
-titre de l’onglet contient le marqueur, long d’au moins 8 caractères. `find`
-revérifie cette cible tous les 10 déplacements. Il ne démarre, n’arrête ni ne
-règle jamais VoiceOver, et chaque appel AppleScript est borné à 2 secondes.
+Commandes : `first` (premier élément de la page), `next`, `prev`,
+`find <nom> [mots…]` (80 déplacements au plus, `--max` jusqu’à 200),
+`activate <nom> [mots…]` et `last` (relit la dernière ligne du journal et sort
+avec son code ; sans journal, code 1). Il ne démarre, n’arrête ni ne règle
+jamais VoiceOver, et chaque appel AppleScript est borné à 2 secondes.
+
+Garde d’onglet, avant chaque geste envoyé à VoiceOver, y compris chaque
+déplacement de `first` et de `find` : VoiceOver tourne, le navigateur du reçu
+(Safari ou Google Chrome) est au premier plan, son onglet actif porte le
+marqueur de titre et le fragment d’adresse, et aucun autre onglet ouvert ne
+porte les deux. Sinon code 5 et aucun geste.
+
+Garde d’élément : `find` parcourt toute la zone web, puis revient sur l’élément
+nommé. Il ne rend 0 que si un seul élément répond, si la fin de la zone a été
+annoncée, si chaque déplacement a donné une annonce nouvelle et si le retour
+est confirmé par l’annonce et par le texte sous le curseur VoiceOver. Deux
+voisins annoncés à l’identique sont captés comme un silence : l’unicité reste
+non prouvée. `activate` exige que la dernière ligne du journal soit ce `find`
+réussi, sur les mêmes mots, le même reçu et le même onglet, et que le texte
+sous le curseur porte encore le nom. Sinon code 8 et aucune activation.
+
+Après un code 5 ou 8, le message dit quoi faire à la main : la personne fait le
+geste, l’agent poursuit l’observation avec `next`, `prev` ou le collecteur, et
+marque « non exécutées » les étapes qu’il n’a pas jouées.
 
 Codes de sortie : 0 annonce nouvelle captée, 1 erreur ou délai dépassé,
-2 arguments invalides, 3 VoiceOver inactif, 4 reçu invalide, 5 cible incorrecte,
-6 nom introuvable, 7 action faite sans annonce nouvelle (cas non concluant).
-Chaque appel, refus compris, ajoute au journal une ligne horodatée avec l’annonce
-assemblée, ses fragments et l’empreinte SHA-256 du reçu. La capture assemble les
-fragments pendant un peu plus d’une seconde ; une annonce plus longue peut être
-tronquée.
+2 arguments invalides, 3 VoiceOver inactif, 4 reçu invalide, 5 onglet non
+confirmé ou ambigu, 6 nom introuvable, 7 action faite sans annonce nouvelle
+(cas non concluant), 8 élément visé non confirmé. Chaque appel, refus compris,
+ajoute au journal une ligne horodatée avec l’annonce assemblée, ses fragments,
+l’empreinte SHA-256 du reçu, le titre et l’adresse de l’onglet, puis
+séparément le texte sous le curseur VoiceOver (`vo_cursor`) et sous le curseur
+clavier (`keyboard_cursor`). La capture assemble les fragments pendant un peu
+plus d’une seconde ; une annonce plus longue peut être tronquée.
+
+Limites non vérifiées sur un Mac avec VoiceOver actif : format réel du texte
+sous le curseur, annonce de fin de zone web en milieu de page, durée d’un
+`find` désormais doublé par le retour. Ces gardes n’ont tourné qu’en
+simulation.
 
 ## Nettoyage vérifié
 

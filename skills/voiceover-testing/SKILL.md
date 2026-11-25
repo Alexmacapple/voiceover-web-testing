@@ -1,7 +1,7 @@
 ---
 name: voiceover-testing
-description: "VoiceOver réellement exécuté sur macOS : tester un site ou un parcours web et relier chaque annonce native à un état et à une action, en démo visible ou en collecte tracée. Utiliser quand un test avec VoiceOver ou avec le lecteur d’écran du Mac est demandé. Pas pour une inspection DOM seule, un audit RGAA ni NVDA ou JAWS."
-compatibility: "macOS avec VoiceOver ; python3 3.7 ou plus ; osascript ; autorisation Automatisation vers VoiceOver ; outil de pilotage du navigateur ou du bureau"
+description: "VoiceOver réellement exécuté sur macOS : tester un site, un parcours web ou un document (PDF dans Aperçu, Word, PowerPoint) et relier chaque annonce native à un état et à une action, en démo visible ou en collecte tracée. Utiliser quand un test avec VoiceOver ou avec le lecteur d’écran du Mac est demandé. Pas pour une inspection DOM seule, un audit RGAA ni NVDA ou JAWS."
+compatibility: "macOS avec VoiceOver ; python3 3.7 ou plus ; osascript ; autorisation Automatisation vers VoiceOver ; outil de pilotage du navigateur ou du bureau ; Aperçu, Word ou PowerPoint pour un document"
 ---
 
 # Test VoiceOver natif
@@ -57,7 +57,9 @@ Avant toute allocation de navigateur, processus, onglet ou fenêtre, et avant
 toute capture, lire [la garde de cible et de propriété](references/cible-et-propriete.md)
 et ouvrir le reçu de session qu’elle exige.
 
-1. Relever la cible/version, le navigateur choisi, macOS, la version, la langue
+1. Pour un document (PDF, Word, PowerPoint), lire d’abord
+   [la cible document](references/documents.md) : reçu par fenêtre, repères
+   observés dans Aperçu, limites. Relever la cible/version, le navigateur ou l’application choisis, macOS, la version, la langue
    et la verbosité de VoiceOver, le périmètre (page, parcours ou commandes de
    plusieurs états). Employer une session et des données isolées lorsque le
    parcours crée du contenu. Ne pas substituer un autre navigateur sans expliquer
@@ -73,7 +75,9 @@ et ouvrir le reçu de session qu’elle exige.
    identifiant, rôle, nom attendu, état actif/désactivé. Inclure les dialogues,
    erreurs et panneaux pertinents au parcours demandé. Documenter les états non
    exercés. Une demande « tous les boutons » exige un dénominateur explicite ;
-   ne pas s’arrêter au premier écran.
+   ne pas s’arrêter au premier écran. Les statistiques VoiceOver (VO-Shift-I)
+   et le rotor web (VO-U), gestes de la personne en démo, croisent cet inventaire sans
+   le remplacer ([réglages et commandes](references/reglages-et-commandes.md)).
 
 Préparation terminée quand la cible, l’inventaire et l’état initial sont consignés.
 
@@ -92,14 +96,18 @@ Préparation terminée quand la cible, l’inventaire et l’état initial sont 
    déplacer le curseur VoiceOver ou activer un élément, utiliser seulement
    `scripts/pilot_voiceover.py`, après l’accord de l’utilisateur cité dans
    `recu.json` (protocole natif, section « Piloter le curseur VoiceOver ») ; il
-   refuse d’agir si l’onglet au premier plan ne porte pas le marqueur du reçu et
-   journalise chaque appel. Il ne vérifie pas où se trouve le curseur VoiceOver :
-   relire chaque annonce avant d’enchaîner. La collecte
+   revérifie avant chaque geste le titre et l’adresse de l’onglet (ou le titre de la fenêtre de document) au premier
+   plan, n’active qu’un élément prouvé unique par `find`, et journalise chaque
+   appel. S’il refuse (codes 5 et 8), la personne fait le geste et l’observation
+   continue ; relire chaque annonce avant d’enchaîner. La collecte
    peut contenir du texte privé : limiter la cible et conserver les traces
    localement.
 6. Exécuter le vrai parcours en montrant les étapes utiles si l’utilisateur
    regarde. Tester les noms des actions par tabulation et la navigation VoiceOver
-   par titres, liens, régions et formulaires selon le périmètre. Le bon intitulé
+   par titres, liens, régions et formulaires selon le périmètre : en démo, la
+   personne fait les commandes de référence ; en collecte, seul
+   `pilot_voiceover.py` parcourt et la navigation par catégorie est notée non
+   exécutée. Le bon intitulé
    d’un bouton ne prouve pas que son action ou le retour de focus fonctionne.
    Relier état → action horodatée → annonce → effet visible. Utiliser des repères
    temporels et des phrases uniques pour distinguer une annonce fraîche d’une
@@ -120,7 +128,11 @@ Lire [les pièges observés en essais réels](references/enseignements.md) devan
 un déplacement de focus à prouver, une région live silencieuse, un arbre
 d’automatisation incomplet, une recherche par sous-chaîne dans un journal
 global ou un nettoyage bloqué par une
-authentification système.
+authentification système. Devant une annonce inattendue, une région live muette
+ou un curseur qui saute, relire d’abord les réglages relevés dans le reçu : le
+suivi des curseurs, les régions live et les indications après délai changent
+la preuve. Le guide Apple d’origine (OS X 10.8, anglais) se lit par sujet
+depuis [son index](references/guide-apple-10.8/index.md).
 
 ## Conclure et nettoyer
 
@@ -170,4 +182,4 @@ sa raison.
 - [ ] Absences qualifiées non concluantes sauf preuve complète ; `phrase_count` relu.
 - [ ] Curseur VoiceOver piloté seulement par `pilot_voiceover.py`, avec accord cité ; journal relu.
 - [ ] Nettoyage vérifié réglage par réglage, ou en attente uniquement pour authentification macOS, signalé à l’utilisateur.
-- [ ] Conclusion bornée au couple macOS, navigateur et VoiceOver testé.
+- [ ] Conclusion bornée au couple macOS, navigateur ou application et VoiceOver testé.

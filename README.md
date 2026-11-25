@@ -1,6 +1,6 @@
 # VoiceOver Web Testing
 
-Skill d’agent, au format [Agent Skills](https://agentskills.io/), pour tester un site ou un parcours web avec VoiceOver réellement exécuté sur macOS et relier chaque annonce native à un état et à une action.
+Skill d’agent, au format [Agent Skills](https://agentskills.io/), pour tester un site, un parcours web ou un document (PDF dans Aperçu, Word, PowerPoint) avec VoiceOver réellement exécuté sur macOS et relier chaque annonce native à un état et à une action.
 
 Le skill et sa documentation sont rédigés en français. Le besoin auquel il répond, ses exigences et ses critères d’acceptation sont décrits dans l’[expression de besoin](expression-de-besoin.md).
 
@@ -8,7 +8,7 @@ Le skill et sa documentation sont rédigés en français. Le besoin auquel il r�
 
 - Il guide l’agent pas à pas : reçu de session, état initial relevé, inventaire par état, canal vérifié en début et en fin, matrice état → action → annonce → effet, nettoyage vérifié.
 - Son collecteur, `scripts/collect_voiceover.py`, lit par sondage borné la dernière phrase prononcée par VoiceOver (`content of last phrase`) et l’écrit dans un fichier JSONL neuf, horodaté et privé. Il n’active pas VoiceOver, ne parle pas et ne navigue pas.
-- Son pilote, `scripts/pilot_voiceover.py`, déplace le curseur VoiceOver ou active un élément dans l’onglet possédé, après un accord de l’utilisateur cité dans `recu.json`. Il refuse d’agir si VoiceOver est inactif ou si l’onglet au premier plan n’est pas le bon, borne chaque appel et journalise chaque action. Il ne démarre ni n’arrête VoiceOver.
+- Son pilote, `scripts/pilot_voiceover.py`, déplace le curseur VoiceOver ou active un élément dans l’onglet possédé ou dans la fenêtre d’un document (Aperçu, Word, PowerPoint, repérée par son titre), après un accord de l’utilisateur cité dans `recu.json`. Il refuse d’agir si VoiceOver est inactif ou si l’onglet ou la fenêtre au premier plan n’est pas le bon, borne chaque appel et journalise chaque action. Il ne démarre ni n’arrête VoiceOver.
 
 ## Ce qu’il ne fait pas
 
@@ -21,10 +21,10 @@ Le skill et sa documentation sont rédigés en français. Le besoin auquel il r�
 
 - macOS avec VoiceOver, Python 3.7 ou plus et `/usr/bin/osascript`.
 - Utilitaire VoiceOver → Général → « Permettre à AppleScript de contrôler VoiceOver » (« Allow VoiceOver to be controlled with AppleScript »).
-- L’autorisation Automatisation de l’application qui lance les commandes, vers VoiceOver et vers le navigateur (Safari ou Google Chrome) ; macOS la demande au premier appel.
+- L’autorisation Automatisation de l’application qui lance les commandes, vers VoiceOver et vers le navigateur (Safari ou Google Chrome) ou System Events pour une fenêtre de document ; macOS la demande au premier appel.
 - Un outil de pilotage du navigateur ou du bureau, par exemple Playwright, pour charger la page et saisir les champs.
 
-Les versions de macOS et de VoiceOver ne sont pas qualifiées : le skill demande de les relever dans chaque reçu de session. Deux essais réels ont eu lieu le 20 novembre 2026, sur la page de démonstration (macOS 27, Safari 27, VoiceOver en français). Le premier a distingué la page correcte du témoin négatif par la position du curseur VoiceOver. Le second, sur la variante DSFR, n’a abouti que pour le cas correct : VoiceOver s’est arrêté pendant le cas défaillant.
+Les versions de macOS et de VoiceOver ne sont pas qualifiées : le skill demande de les relever dans chaque reçu de session. Deux essais réels ont eu lieu le 20 novembre 2026, sur la page de démonstration (macOS 27, Safari 27, VoiceOver en français). Le premier a distingué la page correcte du témoin négatif par la position du curseur VoiceOver. Le second, sur la variante DSFR, n’a abouti que pour le cas correct : VoiceOver s’est arrêté pendant le cas défaillant. Deux autres, le 25 novembre 2026 (macOS 26.5.2, VoiceOver 10), ont porté sur un PDF balisé dans Aperçu : structure annoncée, témoin non balisé appauvri, titre de fenêtre réduit au nom du fichier ; détails dans `skills/voiceover-testing/references/documents.md`.
 
 ## Installation
 
@@ -72,4 +72,4 @@ Les traces peuvent contenir du texte privé lu par VoiceOver, y compris hors du 
 
 ## Licence
 
-MIT, voir [LICENSE](LICENSE). Le dossier `demo/` reste sous la licence MIT de Craig Abbott, reproduite dans `demo/LICENSE`.
+MIT, voir [LICENSE](LICENSE). Le dossier `demo/` reste sous la licence MIT de Craig Abbott, reproduite dans `demo/LICENSE`. `skills/voiceover-testing/references/guide-apple-10.8/` reprend des extraits en anglais du guide Apple « VoiceOver Getting Started » (OS X 10.8, © Apple Inc.), cités avec leur source ; ils ne sont pas couverts par la licence MIT.
