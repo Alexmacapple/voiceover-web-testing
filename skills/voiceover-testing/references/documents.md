@@ -19,8 +19,9 @@ cette application le portant (code 5 sinon).
 
 Commandes utiles : `first` (entre dans le contenu), `next`, `prev`, `into`
 (entrer dans une page ou un groupe), `out`. Repère d’entrée observé pour Aperçu :
-« document groupe ». Word et PowerPoint n’ont pas été observés : leur reçu doit
-déclarer `web_area_markers` (code 4 sinon), relevés au préalable à la main.
+« document groupe ». Pour Word et PowerPoint, le reçu doit déclarer
+`web_area_markers` (code 4 sinon) : les repères relevés ci-dessous ne valent
+que pour VoiceOver en français.
 
 Pilote exécuté le 25 novembre 2026 dans Aperçu : `first` entre par « document
 groupe » et se pose sur la page affichée (pas forcément la page 1) ; `next`,
@@ -54,6 +55,25 @@ remédié et son export d’origine comme témoin :
 Gestes de la personne en démo, non pilotés par le script : VO+Cmd+H (titres),
 VO+Cmd+L (liens), VO+Cmd+G (images), VO+Cmd+T (tableaux), VO+U (rotor).
 VO+Cmd+Maj+H (titre précédent) n’a pas été confirmé lors de l’essai.
+
+## Word et PowerPoint : repères relevés
+
+Relevé du 26 novembre 2026, Mac Studio, macOS 27.0, Office 16.93, VoiceOver en
+français, par exploration gardée (pas encore par le pilote) :
+
+- Word : `web_area_markers: ["contenu de la page"]`. Le contenu est annoncé
+  « Contenu de la page 1 page 1 sur 2 modifier le texte », suivi du texte ; pied
+  de page et en-tête sont des éléments séparés. Fin de parcours : « page »
+  répété, puis silence.
+- PowerPoint : `web_area_markers: ["volet éditeur de diapositives"]`. Annonce
+  « Volet Éditeur de diapositives, Diapositive 1 sur 21 zone de présentation » ;
+  `into` donne « 4 éléments » puis titre, pied de page, numéro et date. Au
+  dernier élément de la diapositive, `next` le répète au lieu de se taire ; le
+  volet de notes se tait.
+- Ouvrir le document peut faire surgir une boîte de récupération d’un autre
+  fichier, ou une demande d’autorisation « sshd-keygen-wrapper » pour une
+  session à distance : la garde de premier plan refuse alors, la personne y
+  répond.
 
 ## Ce que la recette ne prouve pas
 

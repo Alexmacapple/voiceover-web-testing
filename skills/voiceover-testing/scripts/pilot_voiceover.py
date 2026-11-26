@@ -51,8 +51,9 @@ set out to out & linefeed & (name of w)
 end repeat
 return out
 end tell"""
-# Content markers: Preview observed in a real run (macOS 26.5, French); Word and
-# PowerPoint not observed yet, so their receipt must declare web_area_markers.
+# Content markers: Preview observed in a real run (macOS 26.5, French). Word and
+# PowerPoint were only surveyed in French (references/documents.md), so their
+# receipt must declare web_area_markers.
 DOCUMENT_APPS = {
     "Preview": ["document groupe", "document group"],
     "Microsoft Word": None,
